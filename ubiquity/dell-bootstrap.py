@@ -920,6 +920,20 @@ class Page(Plugin):
         """
         rec_type = self.db.get(RECOVERY_TYPE_QUESTION)
 
+        if self.stage == 2 :
+            with misc.raised_privileges():
+                #find old entries
+                bootmgr_output = magic.fetch_output(['efibootmgr', '-v']).split('\n')
+
+                self.log("fucking life : will delete delete entry %s " % bootmgr_output)
+                #delete old entries
+                for line in bootmgr_output:
+                    bootnum = '' 
+                    if line.startswith('Boot') and 'ubuntu' in line.lower():
+                        bootnum = line.split('Boot')[1].replace('*', '').split()[0]
+                        self.log("fucking life : delete efi boot entry [%s]" % bootnum)
+                        if bootnum:
+                            bootmgr = misc.execute_root('efibootmgr', '-v', '-b', bootnum, '-B')
         try:
             # User recovery - need to copy RP
             if rec_type == "automatic" or rec_type == "dhc" or \
