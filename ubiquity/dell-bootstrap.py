@@ -921,6 +921,8 @@ class Page(Plugin):
         rec_type = self.db.get(RECOVERY_TYPE_QUESTION)
 
         if self.stage == 2 :
+            os.system("touch /tmp/.kylin_reboot_go_oem")
+
             with misc.raised_privileges():
                 #find old entries
                 bootmgr_output = magic.fetch_output(['efibootmgr', '-v']).split('\n')
