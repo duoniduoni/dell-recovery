@@ -95,12 +95,12 @@ if [ "$BOOTDEV" = "$TARGETDEV" ]; then
     rm -fr $RP/factory/grubenv
     rm -rf $RP/.disk/casper-uuid*
 
-    IFHALT "Regenerate md5sum.txt at the end..."
-    $(python3 << EOF
-from Dell.recovery_common import regenerate_md5sum
-regenerate_md5sum("$RP")
-EOF
-)
+#    IFHALT "Regenerate md5sum.txt at the end..."
+#    $(python3 << EOF
+#from Dell.recovery_common import regenerate_md5sum
+#regenerate_md5sum("$RP")
+#EOF
+#)
 
     IFHALT "Report the LOG..."
     # create a dmesg.log file to record the dmesg info
