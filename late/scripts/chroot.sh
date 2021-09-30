@@ -27,7 +27,7 @@
 #       MA 02110-1301, USA.
 
 set -x
-set -e
+#set -e
 
 export TARGET=/target
 
@@ -72,7 +72,7 @@ fi
 echo "in $0"
 
 # Execute FAIL-SCRIPT if we exit for any reason (abnormally)
-trap ". /usr/share/dell/scripts/FAIL-SCRIPT" TERM INT HUP EXIT QUIT
+#trap ". /usr/share/dell/scripts/FAIL-SCRIPT" TERM INT HUP EXIT QUIT
 
 mount --bind /dev $TARGET/dev
 MOUNT_CLEANUP="$TARGET/dev $MOUNT_CLEANUP"
@@ -179,6 +179,6 @@ fi
 
 
 # reset traps, as we are now exiting normally
-trap - TERM INT HUP EXIT QUIT
+#trap - TERM INT HUP EXIT QUIT
 
 . /usr/share/dell/scripts/SUCCESS-SCRIPT

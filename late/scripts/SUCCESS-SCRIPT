@@ -30,10 +30,10 @@
 . /usr/share/dell/scripts/fifuncs "target"
 
 set -x
-set -e
+#set -e
 
 IFHALT "(SUCCESS) Clean-Up .."
-chroot $TARGET /usr/share/dell/scripts/pool.sh cleanup
+#chroot $TARGET /usr/share/dell/scripts/pool.sh cleanup
 
 #Fixup APT how we want it for a successful oem-config run
 rm -f $TARGET/var/lib/apt/lists/*Packages
