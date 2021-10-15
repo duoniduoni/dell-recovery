@@ -118,8 +118,8 @@
 # This gets deleted by oem-config-prepare, so it doesnt matter...
  d-i passwd/user-fullname string OEM
  d-i passwd/username string oem
- d-i passwd/user-password password password
- d-i passwd/user-password-again password password
+ d-i passwd/user-password password qwe123 
+ d-i passwd/user-password-again password qwe123
 
 # enable oem mode
  d-i oem-config/enable boolean true
