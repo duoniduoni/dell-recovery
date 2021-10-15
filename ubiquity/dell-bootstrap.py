@@ -893,6 +893,8 @@ class Page(Plugin):
 
     def ok_handler(self):
         """Copy answers from debconf questions"""
+
+        self.log("fucking life : here is dell-bootstrap::ok_handler, curent stage is [%d]" % self.stage)
         #basic questions
         rec_type = self.ui.get_type()
         self.log("recovery type set to '%s'" % rec_type)
@@ -920,6 +922,8 @@ class Page(Plugin):
         """
         rec_type = self.db.get(RECOVERY_TYPE_QUESTION)
 
+        self.log("fucking life : here is dell-bootstrap, curent stage is [%d]" % self.stage)
+
         if self.stage == 2 :
             os.system("touch /tmp/.kylin_reboot_go_oem")
 
@@ -930,12 +934,13 @@ class Page(Plugin):
                 self.log("fucking life : will delete delete entry %s " % bootmgr_output)
                 #delete old entries
                 for line in bootmgr_output:
-                    bootnum = '' 
+                    bootnum = ''
                     if line.startswith('Boot') and 'ubuntu' in line.lower():
                         bootnum = line.split('Boot')[1].replace('*', '').split()[0]
                         self.log("fucking life : delete efi boot entry [%s]" % bootnum)
                         if bootnum:
                             bootmgr = misc.execute_root('efibootmgr', '-v', '-b', bootnum, '-B')
+
         try:
             # User recovery - need to copy RP
             if rec_type == "automatic" or rec_type == "dhc" or \
@@ -1195,6 +1200,15 @@ manually to proceed.")
                     for f in files:
                         if bootloader in f.lower():
                             shutil.copy(os.path.join(root,f), direct_path)
+
+            os.makedirs('/mnt/efi/boot/grub')
+            #shutil.copy('/cdrom/zs/grub.cfg', '/mnt/efi/boot/grub')
+            with open('/mnt/efi/boot/grub/grub.cfg', 'w') as cfg:
+                cfg.write("search --file --set=new_root /factory/grubenv\n")
+                cfg.write("set root=$new_root\n")
+                cfg.write("set prefix=($root)/boot/grub\n")
+                cfg.write("configfile /boot/grub/grub.cfg\n")
+
 
             #find old entries
             bootmgr_output = magic.fetch_output(['efibootmgr', '-v']).split('\n')
