@@ -939,7 +939,7 @@ class Page(Plugin):
                         bootnum = line.split('Boot')[1].replace('*', '').split()[0]
                         self.log("fucking life : delete efi boot entry [%s]" % bootnum)
                         if bootnum:
-                            bootmgr = misc.execute_root('efibootmgr', '-v', '-b', bootnum, '-B')
+                            misc.execute_root('efibootmgr', '-v', '-b', bootnum, '-B')
 
         try:
             # User recovery - need to copy RP
